@@ -1,10 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.sass']
+  selector: 'rkt-root',
+  template: '<rkt-designer></rkt-designer>',
 })
-export class AppComponent {
-  title = 'rkt';
-}
+export class AppComponent {}
