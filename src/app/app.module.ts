@@ -3,18 +3,22 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { DesignerComponent } from './designer/designer.component';
+import { RocketDrawingModule } from './modules/rocket-drawing/rocket-drawing.module';
+import { ControlPanelModule } from './modules/control-panel/control-panel.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MaterialModule } from './modules/_material/material.module';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    DesignerComponent
-  ],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    RocketDrawingModule,
+    ControlPanelModule,
+    BrowserAnimationsModule,
+    MaterialModule
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}

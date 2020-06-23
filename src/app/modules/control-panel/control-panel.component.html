@@ -1,0 +1,40 @@
+<div class="controlPanelContainer">
+  <div class="treeDrawerContainer">
+    <rkt-tree-drawer></rkt-tree-drawer>
+  </div>
+  <mat-sidenav-container class="editorContainer">
+    <mat-sidenav mode="side" opened>
+      <mat-button-toggle-group #toggleGroup="matButtonToggleGroup" vertical>
+        <mat-button-toggle #editButtonToggle value="build">
+          <mat-icon>edit</mat-icon>
+        </mat-button-toggle>
+        <mat-button-toggle value="info">
+          <mat-icon>info</mat-icon>
+        </mat-button-toggle>
+        <mat-button-toggle value="tree" checked>
+          <mat-icon>add</mat-icon>
+        </mat-button-toggle>
+        <mat-button-toggle value="appearance">
+          <mat-icon>brush</mat-icon>
+        </mat-button-toggle>
+      </mat-button-toggle-group>
+    </mat-sidenav>
+    <mat-sidenav-content [ngSwitch]="toggleGroup.value">
+      <div class="controlPanelSwitchContainer">
+        <ng-container *ngSwitchCase="'build'">
+          <rkt-part-editor></rkt-part-editor>
+        </ng-container>
+        <ng-container *ngSwitchCase="'info'">
+          <rkt-part-data></rkt-part-data>
+        </ng-container>
+        <ng-container *ngSwitchCase="'tree'">
+          <rkt-part-toolbox></rkt-part-toolbox>
+        </ng-container>
+        <ng-container *ngSwitchCase="'appearance'">
+          <rkt-part-appearance></rkt-part-appearance>
+        </ng-container>
+        <div *ngSwitchDefault>Under Construction</div>
+      </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>
