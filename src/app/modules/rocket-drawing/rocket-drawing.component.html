@@ -1,33 +1,34 @@
 <svg:svg
   id="rocketMainSVG"
-  style="background-color: aqua; width: 100%; height: 100%;"
   #drawingSvg
   (mousedown)="detectedMouseDown($event)"
-  (mouseup)="detectedMouseUp()"
+  (mouseup)="stopPanning()"
   (mousemove)="mouseMove($event)"
-  (mouseleave)="detectedMouseLeave()"
+  (mouseleave)="stopPanning()"
+  (mousewheel)="detectedMouseWheel($event)"
+  (pointerdown)="detectedMouseDown($event)"
 >
   <line
-    [attr.x1]="lockPanY ? '50%' : drawing_origin.x"
-    [attr.x2]="lockPanY ? '50%' : drawing_origin.x"
+    id="rocketCenterline"
+    [attr.x1]="viewModel.lockPanY ? '50%' : viewModel.drawing_origin.x"
+    [attr.x2]="viewModel.lockPanY ? '50%' : viewModel.drawing_origin.x"
     y1="0"
     y2="100%"
-    stroke-width="1"
-    stroke="gray"
-    fill="none"
-    stroke-dasharray="10 4"
     *ngIf="true"
   />
 
   <svg
-    [attr.x]="lockPanY ? '50%' : drawing_origin.x"
-    [attr.y]="drawing_origin.y"
-    style="overflow: visible;"
+    id="drawingContainer"
+    [attr.x]="viewModel.lockPanY ? '50%' : viewModel.drawing_origin.x"
+    [attr.y]="viewModel.drawing_origin.y"
   >
-    <circle cx="0" cy="0" [attr.r]="unitiyPx" fill="red"></circle>
-    <circle cx="60" cy="60" [attr.r]="unitiyPx" fill="red"></circle>
+    <g [attr.transform]="'scale(' + viewModel.drawing_scale + ')'">
+      <circle cx="0" cy="0" [attr.r]="1" fill="green"></circle>
+      <circle cx="2" cy="2" [attr.r]="1" fill="red"></circle>
+      <circle cx="2" cy="-2" [attr.r]="2" fill="red"></circle>
+    </g>
   </svg>
 </svg:svg>
 <div id="drawingCoordsContainer">
-  <p id="drawingCoords">{{ displayCoords }}</p>
+  <p id="drawingCoords">{{ viewModel.displayCoords }}</p>
 </div>
