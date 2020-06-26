@@ -1,1 +1,33 @@
-<p>rocket-drawing works!</p>
+<svg:svg
+  id="rocketMainSVG"
+  style="background-color: aqua; width: 100%; height: 100%;"
+  #drawingSvg
+  (mousedown)="detectedMouseDown($event)"
+  (mouseup)="detectedMouseUp()"
+  (mousemove)="mouseMove($event)"
+  (mouseleave)="detectedMouseLeave()"
+>
+  <line
+    [attr.x1]="lockPanY ? '50%' : drawing_origin.x"
+    [attr.x2]="lockPanY ? '50%' : drawing_origin.x"
+    y1="0"
+    y2="100%"
+    stroke-width="1"
+    stroke="gray"
+    fill="none"
+    stroke-dasharray="10 4"
+    *ngIf="true"
+  />
+
+  <svg
+    [attr.x]="lockPanY ? '50%' : drawing_origin.x"
+    [attr.y]="drawing_origin.y"
+    style="overflow: visible;"
+  >
+    <circle cx="0" cy="0" [attr.r]="unitiyPx" fill="red"></circle>
+    <circle cx="60" cy="60" [attr.r]="unitiyPx" fill="red"></circle>
+  </svg>
+</svg:svg>
+<div id="drawingCoordsContainer">
+  <p id="drawingCoords">{{ displayCoords }}</p>
+</div>

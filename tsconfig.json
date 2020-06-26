@@ -3,7 +3,7 @@
   "compilerOptions": {
     "baseUrl": "src",
     "paths": {
-      "@rkt/*": ["app/modelRocketBuilder/*"]
+      "@rkt/*": ["@rkt/*"]
     },
     "outDir": "./dist/out-tsc",
     "sourceMap": true,
