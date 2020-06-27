@@ -1,9 +1,3 @@
-<svg id="customCursor" style="overflow: visible;" *ngIf="viewModel.showCursor">
-  <path
-    id="cursor"
-    [attr.d]="draw()"
-    fill="black"
-    stroke="black"
-    stroke-width="2"
-  />
+<svg *ngIf="viewModel.showCursor">
+  <path [attr.d]="draw()" fill="black" stroke="black" stroke-width="2" />
 </svg>

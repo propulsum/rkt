@@ -1,6 +1,18 @@
-<svg id="gridLines" style="overflow: visible;" *ngIf="viewModel.showGridLines">
+<svg *ngIf="viewModel.showGridLines">
   <ng-container *ngFor="let a of getIntegerArray()">
-    <line [attr.x1]="-100" [attr.x2]="100" [attr.y1]="a" [attr.y2]="a" />
-    <line [attr.y1]="-100" [attr.y2]="100" [attr.x1]="a" [attr.x2]="a" />
+    <line
+      [ngClass]="{ thickline: a % 5 == 0 }"
+      [attr.x1]="-100"
+      [attr.x2]="100"
+      [attr.y1]="a"
+      [attr.y2]="a"
+    />
+    <line
+      [ngClass]="{ thickline: a % 5 == 0 }"
+      [attr.y1]="-100"
+      [attr.y2]="100"
+      [attr.x1]="a"
+      [attr.x2]="a"
+    />
   </ng-container>
 </svg>
