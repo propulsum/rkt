@@ -8,6 +8,7 @@ import {
 import { PixelCoord } from 'core/domain/PixelCoord';
 import { DrawingCoord } from 'core/domain/DrawingCoord';
 import { RocketDrawingViewModel } from './rocket-drawing.viewmodel';
+import { SvgNoseconeViewModel } from './components/svg-nosecone/svg-nosecone.viewmodel';
 
 @Component({
   selector: 'rkt-rocket-drawing',
@@ -17,45 +18,123 @@ import { RocketDrawingViewModel } from './rocket-drawing.viewmodel';
 export class RocketDrawingComponent {
   public viewModel: RocketDrawingViewModel = new RocketDrawingViewModel();
 
+  public noseconeVM: SvgNoseconeViewModel;
+
   @ViewChild('drawingSvg') drawingSvg: ElementRef;
 
   constructor(private cd: ChangeDetectorRef) {
-    this.viewModel.drawing_origin = new PixelCoord(0, 0);
-    this.viewModel.mouse_location = new PixelCoord(0, 0);
-    this.viewModel.drawing_scale = 2;
+    this.viewModel.drawingOrigin = new PixelCoord(0, 0);
+    this.viewModel.mouseLocation = new PixelCoord(0, 0);
+
+    this.noseconeVM = new SvgNoseconeViewModel();
   }
 
   ngAfterViewInit(): void {
     this.getSizes();
-    this.viewModel.drawing_origin = new PixelCoord(
-      this.viewModel.drawing_width / 2,
+    this.viewModel.drawingOrigin = new PixelCoord(
+      this.viewModel.drawingWidth / 2,
       0
     );
     this.cd.detectChanges();
   }
 
   detectedMouseDown(event: MouseEvent): void {
-    this.viewModel.pan_start = new PixelCoord(event.x, event.y);
-    this.viewModel.pan_start.x -=
-      this.viewModel.screenWidth - this.viewModel.drawing_width;
-    this.viewModel.pan_start_origin = new PixelCoord(
-      this.viewModel.drawing_origin.x + 0,
-      this.viewModel.drawing_origin.y
+    this.viewModel.panStart = new PixelCoord(event.x, event.y);
+    this.viewModel.panStart.x -=
+      this.viewModel.screenWidth - this.viewModel.drawingWidth;
+    this.viewModel.panStartOrigin = new PixelCoord(
+      this.viewModel.drawingOrigin.x + 0,
+      this.viewModel.drawingOrigin.y
     );
     this.viewModel.isPanning = true;
+  }
+
+  detectedMouseLeave(): void {
+    this.stopPanning();
+    this.viewModel.showCursor = false;
+  }
+
+  detectedMouseEnter(): void {
+    this.viewModel.showCursor = true;
   }
 
   stopPanning(): void {
     this.viewModel.isPanning = false;
   }
 
+  gridLines(): number[] {
+    const result = [];
+
+    for (
+      let index = -this.viewModel.numGridLines * 0.5;
+      index < this.viewModel.numGridLines * 1.5;
+      index++
+    ) {
+      result.push(index);
+    }
+
+    return result;
+  }
+
+  drawCursor(): string {
+    let result = '';
+
+    const r = this.viewModel.cursorRadius;
+
+    if (this.viewModel.isPanning && this.viewModel.lockPanY) {
+      const w = r / 10;
+      const v = r / 2;
+      const h = r / 3;
+
+      result +=
+        'M ' +
+        (this.viewModel.mouseLocation.x - w) +
+        ' ' +
+        this.viewModel.mouseLocation.y;
+      result += ' v ' + v;
+      result += ' h -' + h;
+      result +=
+        ' L ' +
+        this.viewModel.mouseLocation.x +
+        ' ' +
+        (this.viewModel.mouseLocation.y + r);
+      result += ' l ' + (h + w) + ' ' + (v - r);
+      result += ' h -' + h;
+      result += ' v -' + 2 * v;
+      result += ' h ' + h;
+      result +=
+        ' L ' +
+        this.viewModel.mouseLocation.x +
+        ' ' +
+        (this.viewModel.mouseLocation.y - r);
+      result += ' l -' + (h + w) + ' ' + v;
+      result += ' h ' + h;
+      result += ' v ' + v;
+    } else {
+      result +=
+        'M ' +
+        (this.viewModel.mouseLocation.x - this.viewModel.cursorRadius) +
+        ' ' +
+        this.viewModel.mouseLocation.y;
+      result += ' h ' + 2 * this.viewModel.cursorRadius;
+      result +=
+        ' M ' +
+        this.viewModel.mouseLocation.x +
+        ' ' +
+        (this.viewModel.mouseLocation.y - this.viewModel.cursorRadius);
+      result += ' v ' + 2 * this.viewModel.cursorRadius;
+    }
+
+    return result;
+  }
+
   mouseMove(mouse: MouseEvent): void {
     this.getSizes();
-    this.viewModel.mouse_location = new PixelCoord(mouse.x, mouse.y);
-    this.viewModel.mouse_location.x -=
-      this.viewModel.screenWidth - this.viewModel.drawing_width;
+    this.viewModel.mouseLocation = new PixelCoord(mouse.x, mouse.y);
+    this.viewModel.mouseLocation.x -=
+      this.viewModel.screenWidth - this.viewModel.drawingWidth;
     this.viewModel.displayCoords = this.pixelToCoord(
-      this.viewModel.mouse_location
+      this.viewModel.mouseLocation
     ).print();
 
     if (this.viewModel.isPanning) {
@@ -65,33 +144,51 @@ export class RocketDrawingComponent {
 
   detectedMouseWheel(event: WheelEvent): void {
     if (
-      this.viewModel.drawing_scale + event.deltaY <
-      this.viewModel.drawing_scale_min
+      this.viewModel.drawingScale + event.deltaY <
+      this.viewModel.drawingScaleMin
     ) {
-      this.viewModel.drawing_scale = this.viewModel.drawing_scale_min + 1;
+      this.viewModel.drawingScale = this.viewModel.drawingScaleMin + 1;
       return;
     }
     if (
-      this.viewModel.drawing_scale + event.deltaY >
-      this.viewModel.drawing_scale_max
+      this.viewModel.drawingScale + event.deltaY >
+      this.viewModel.drawingScaleMax
     ) {
-      this.viewModel.drawing_scale = this.viewModel.drawing_scale_max - 1;
+      this.viewModel.drawingScale = this.viewModel.drawingScaleMax - 1;
       return;
     }
-    this.viewModel.drawing_scale +=
+    this.viewModel.drawingScale +=
       event.deltaY / this.viewModel.scrollWheelSpeed;
   }
 
   pan(): void {
     const dy: number =
-      this.viewModel.mouse_location.y - this.viewModel.pan_start.y;
+      this.viewModel.mouseLocation.y - this.viewModel.panStart.y;
     const dx: number =
-      this.viewModel.mouse_location.x - this.viewModel.pan_start.x;
+      this.viewModel.mouseLocation.x - this.viewModel.panStart.x;
 
     if (!this.viewModel.lockPanY) {
-      this.viewModel.drawing_origin.x = this.viewModel.pan_start_origin.x + dx;
+      this.viewModel.drawingOrigin.x = this.viewModel.panStartOrigin.x + dx;
     }
-    this.viewModel.drawing_origin.y = this.viewModel.pan_start_origin.y + dy;
+    if (
+      this.viewModel.panStartOrigin.y + dy >
+      this.viewModel.panMaxY * this.viewModel.drawingScale
+    ) {
+      this.viewModel.drawingOrigin.y =
+        this.viewModel.panMaxY * this.viewModel.drawingScale - 1;
+      return;
+    }
+
+    if (
+      this.viewModel.panStartOrigin.y + dy <
+      this.viewModel.panMinY * this.viewModel.drawingScale
+    ) {
+      this.viewModel.drawingOrigin.y =
+        this.viewModel.panMinY * this.viewModel.drawingScale + 1;
+      return;
+    }
+
+    this.viewModel.drawingOrigin.y = this.viewModel.panStartOrigin.y + dy;
   }
 
   @HostListener('window:resize')
@@ -100,26 +197,24 @@ export class RocketDrawingComponent {
     this.viewModel.screenHeight = window.innerHeight;
     this.viewModel.screenWidth = window.innerWidth;
     if (this.viewModel.lockPanY) {
-      this.viewModel.drawing_origin.x = this.viewModel.drawing_width / 2;
+      this.viewModel.drawingOrigin.x = this.viewModel.drawingWidth / 2;
     }
   }
 
   getDrawingDimensions(): void {
-    this.viewModel.drawing_width = this.drawingSvg.nativeElement[
+    this.viewModel.drawingWidth = this.drawingSvg.nativeElement[
       'width'
     ].baseVal.value;
-    this.viewModel.drawing_height = this.drawingSvg.nativeElement[
+    this.viewModel.drawingHeight = this.drawingSvg.nativeElement[
       'height'
     ].baseVal.value;
   }
 
   pixelToCoord(pixel: PixelCoord): DrawingCoord {
     const x =
-      (pixel.x - this.viewModel.drawing_origin.x) /
-      this.viewModel.drawing_scale;
+      (pixel.x - this.viewModel.drawingOrigin.x) / this.viewModel.drawingScale;
     const y =
-      (pixel.y - this.viewModel.drawing_origin.y) /
-      this.viewModel.drawing_scale;
+      (pixel.y - this.viewModel.drawingOrigin.y) / this.viewModel.drawingScale;
 
     return new DrawingCoord(x, y);
   }

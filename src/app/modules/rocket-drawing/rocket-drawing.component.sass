@@ -1,18 +1,28 @@
+@import 'src/colors.sass'
+
 #rocketMainSVG
   width: 100%
   height: 100%
+  cursor: none
+  background-color: $rkt-paper-color
+
+#gridLines line
+  stroke: $rkt-gridline-color
+  stroke-width: 0.02
 
 #rocketCenterline
-  stroke: grey
-  stroke-width: 1
+  stroke: $rkt-centerline-color
+  stroke-width: 0.06
   fill: none
-  stroke-dasharray: 10 4
+  stroke-dasharray: 1 0.25
 
 #drawingCoordsContainer
   position: absolute
   z-index: 10
   bottom: 0
   right: 0
+  cursor: arrow
+  user-select: none
 
 #drawingCoords
   margin:0
@@ -20,3 +30,6 @@
 
 #drawingContainer
   overflow: visible
+
+#customCursor
+  z-index: 1

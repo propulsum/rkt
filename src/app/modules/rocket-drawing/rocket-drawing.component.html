@@ -4,28 +4,43 @@
   (mousedown)="detectedMouseDown($event)"
   (mouseup)="stopPanning()"
   (mousemove)="mouseMove($event)"
-  (mouseleave)="stopPanning()"
+  (mouseleave)="detectedMouseLeave()"
   (mousewheel)="detectedMouseWheel($event)"
   (pointerdown)="detectedMouseDown($event)"
+  (mouseenter)="detectedMouseEnter()"
 >
-  <line
-    id="rocketCenterline"
-    [attr.x1]="viewModel.lockPanY ? '50%' : viewModel.drawing_origin.x"
-    [attr.x2]="viewModel.lockPanY ? '50%' : viewModel.drawing_origin.x"
-    y1="0"
-    y2="100%"
-    *ngIf="true"
-  />
+  <g id="customCursor" *ngIf="viewModel.showCursor">
+    <path
+      id="cursor"
+      [attr.d]="drawCursor()"
+      fill="black"
+      stroke="black"
+      stroke-width="2"
+    />
+  </g>
 
   <svg
     id="drawingContainer"
-    [attr.x]="viewModel.lockPanY ? '50%' : viewModel.drawing_origin.x"
-    [attr.y]="viewModel.drawing_origin.y"
+    [attr.x]="viewModel.lockPanY ? '50%' : viewModel.drawingOrigin.x"
+    [attr.y]="viewModel.drawingOrigin.y"
   >
-    <g [attr.transform]="'scale(' + viewModel.drawing_scale + ')'">
-      <circle cx="0" cy="0" [attr.r]="1" fill="green"></circle>
-      <circle cx="2" cy="2" [attr.r]="1" fill="red"></circle>
-      <circle cx="2" cy="-2" [attr.r]="2" fill="red"></circle>
+    <g [attr.transform]="'scale(' + viewModel.drawingScale + ')'">
+      <line
+        id="rocketCenterline"
+        [attr.x1]="0"
+        [attr.x2]="0"
+        y1="-100%"
+        y2="100%"
+        *ngIf="true"
+      />
+      <g id="gridLines" *ngIf="viewModel.showGridLines">
+        <ng-container *ngFor="let a of gridLines()">
+          <line [attr.x1]="-100" [attr.x2]="100" [attr.y1]="a" [attr.y2]="a" />
+          <line [attr.y1]="-100" [attr.y2]="100" [attr.x1]="a" [attr.x2]="a" />
+        </ng-container>
+      </g>
+
+      <g rkt-svg-nosecone [viewModel]="noseconeVM"></g>
     </g>
   </svg>
 </svg:svg>
