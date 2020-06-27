@@ -9,15 +9,7 @@
   (pointerdown)="detectedMouseDown($event)"
   (mouseenter)="detectedMouseEnter()"
 >
-  <g id="customCursor" *ngIf="viewModel.showCursor">
-    <path
-      id="cursor"
-      [attr.d]="drawCursor()"
-      fill="black"
-      stroke="black"
-      stroke-width="2"
-    />
-  </g>
+  <g rkt-svg-cursor [viewModel]="viewModel.cursorViewModel"></g>
 
   <svg
     id="drawingContainer"
@@ -25,22 +17,10 @@
     [attr.y]="viewModel.drawingOrigin.y"
   >
     <g [attr.transform]="'scale(' + viewModel.drawingScale + ')'">
-      <line
-        id="rocketCenterline"
-        [attr.x1]="0"
-        [attr.x2]="0"
-        y1="-100%"
-        y2="100%"
-        *ngIf="true"
-      />
-      <g id="gridLines" *ngIf="viewModel.showGridLines">
-        <ng-container *ngFor="let a of gridLines()">
-          <line [attr.x1]="-100" [attr.x2]="100" [attr.y1]="a" [attr.y2]="a" />
-          <line [attr.y1]="-100" [attr.y2]="100" [attr.x1]="a" [attr.x2]="a" />
-        </ng-container>
-      </g>
+      <g rkt-svg-girdlines [viewModel]="viewModel.gridLinesViewModel" />
+      <g rkt-svg-centerline [viewModel]="viewModel.centerlineViewModel" />
 
-      <g rkt-svg-nosecone [viewModel]="noseconeVM"></g>
+      <g rkt-svg-nosecone [viewModel]="noseconeVM" />
     </g>
   </svg>
 </svg:svg>

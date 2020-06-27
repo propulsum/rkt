@@ -1,4 +1,7 @@
 import { PixelCoord } from 'core/domain/PixelCoord';
+import { CursorViewModel } from './components/cursor/cursor.viewmodel';
+import { SvgGridLinesViewModel } from './components/svg-girdlines/svg-gridlines.viewmodel';
+import { SvgCenterlineViewModel } from './components/svg-centerline/svg-centerline.viewmodel';
 
 export class RocketDrawingViewModel {
   // Screen Dimensions (px)
@@ -32,10 +35,11 @@ export class RocketDrawingViewModel {
   public displayCoords = '';
 
   // Cursor properties
-  public showCursor = true;
-  public cursorRadius = 20;
+  public cursorViewModel: CursorViewModel = new CursorViewModel();
+
+  // Centerline properties
+  public centerlineViewModel: SvgCenterlineViewModel = new SvgCenterlineViewModel();
 
   // Grid Properties
-  public numGridLines = 100;
-  public showGridLines = true;
+  public gridLinesViewModel: SvgGridLinesViewModel = new SvgGridLinesViewModel();
 }

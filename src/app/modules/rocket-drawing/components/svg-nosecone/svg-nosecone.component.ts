@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core';
 import { SvgNoseconeViewModel } from './svg-nosecone.viewmodel';
 
 @Component({
-  selector: '[rkt-svg-nosecone]',
+  selector: 'g[rkt-svg-nosecone]',
   templateUrl: './svg-nosecone.component.html',
   styleUrls: ['./svg-nosecone.component.sass']
 })

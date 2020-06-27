@@ -9,6 +9,7 @@ import { PixelCoord } from 'core/domain/PixelCoord';
 import { DrawingCoord } from 'core/domain/DrawingCoord';
 import { RocketDrawingViewModel } from './rocket-drawing.viewmodel';
 import { SvgNoseconeViewModel } from './components/svg-nosecone/svg-nosecone.viewmodel';
+import { CursorType } from './components/cursor/cursor.viewmodel';
 
 @Component({
   selector: 'rkt-rocket-drawing',
@@ -47,85 +48,21 @@ export class RocketDrawingComponent {
       this.viewModel.drawingOrigin.y
     );
     this.viewModel.isPanning = true;
+    this.viewModel.cursorViewModel.cursorType = CursorType.VPan;
   }
 
   detectedMouseLeave(): void {
     this.stopPanning();
-    this.viewModel.showCursor = false;
+    this.viewModel.cursorViewModel.showCursor = false;
   }
 
   detectedMouseEnter(): void {
-    this.viewModel.showCursor = true;
+    this.viewModel.cursorViewModel.showCursor = true;
   }
 
   stopPanning(): void {
     this.viewModel.isPanning = false;
-  }
-
-  gridLines(): number[] {
-    const result = [];
-
-    for (
-      let index = -this.viewModel.numGridLines * 0.5;
-      index < this.viewModel.numGridLines * 1.5;
-      index++
-    ) {
-      result.push(index);
-    }
-
-    return result;
-  }
-
-  drawCursor(): string {
-    let result = '';
-
-    const r = this.viewModel.cursorRadius;
-
-    if (this.viewModel.isPanning && this.viewModel.lockPanY) {
-      const w = r / 10;
-      const v = r / 2;
-      const h = r / 3;
-
-      result +=
-        'M ' +
-        (this.viewModel.mouseLocation.x - w) +
-        ' ' +
-        this.viewModel.mouseLocation.y;
-      result += ' v ' + v;
-      result += ' h -' + h;
-      result +=
-        ' L ' +
-        this.viewModel.mouseLocation.x +
-        ' ' +
-        (this.viewModel.mouseLocation.y + r);
-      result += ' l ' + (h + w) + ' ' + (v - r);
-      result += ' h -' + h;
-      result += ' v -' + 2 * v;
-      result += ' h ' + h;
-      result +=
-        ' L ' +
-        this.viewModel.mouseLocation.x +
-        ' ' +
-        (this.viewModel.mouseLocation.y - r);
-      result += ' l -' + (h + w) + ' ' + v;
-      result += ' h ' + h;
-      result += ' v ' + v;
-    } else {
-      result +=
-        'M ' +
-        (this.viewModel.mouseLocation.x - this.viewModel.cursorRadius) +
-        ' ' +
-        this.viewModel.mouseLocation.y;
-      result += ' h ' + 2 * this.viewModel.cursorRadius;
-      result +=
-        ' M ' +
-        this.viewModel.mouseLocation.x +
-        ' ' +
-        (this.viewModel.mouseLocation.y - this.viewModel.cursorRadius);
-      result += ' v ' + 2 * this.viewModel.cursorRadius;
-    }
-
-    return result;
+    this.viewModel.cursorViewModel.cursorType = CursorType.CrossHairs;
   }
 
   mouseMove(mouse: MouseEvent): void {
@@ -133,6 +70,9 @@ export class RocketDrawingComponent {
     this.viewModel.mouseLocation = new PixelCoord(mouse.x, mouse.y);
     this.viewModel.mouseLocation.x -=
       this.viewModel.screenWidth - this.viewModel.drawingWidth;
+
+    this.viewModel.cursorViewModel.mouseLocation = this.viewModel.mouseLocation;
+
     this.viewModel.displayCoords = this.pixelToCoord(
       this.viewModel.mouseLocation
     ).print();
@@ -211,9 +151,9 @@ export class RocketDrawingComponent {
   }
 
   pixelToCoord(pixel: PixelCoord): DrawingCoord {
-    const x =
-      (pixel.x - this.viewModel.drawingOrigin.x) / this.viewModel.drawingScale;
     const y =
+      (pixel.x - this.viewModel.drawingOrigin.x) / this.viewModel.drawingScale;
+    const x =
       (pixel.y - this.viewModel.drawingOrigin.y) / this.viewModel.drawingScale;
 
     return new DrawingCoord(x, y);
