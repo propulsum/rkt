@@ -3,12 +3,12 @@ import {
   ViewChild,
   ElementRef,
   HostListener,
-  ChangeDetectorRef
+  ChangeDetectorRef,
+  Input
 } from '@angular/core';
 import { PixelCoord } from 'core/domain/PixelCoord';
 import { DrawingCoord } from 'core/domain/DrawingCoord';
 import { RocketDrawingViewModel } from './rocket-drawing.viewmodel';
-import { SvgNoseconeViewModel } from './components/svg-nosecone/svg-nosecone.viewmodel';
 import { CursorType } from './components/cursor/cursor.viewmodel';
 
 @Component({
@@ -17,18 +17,11 @@ import { CursorType } from './components/cursor/cursor.viewmodel';
   styleUrls: ['./rocket-drawing.component.sass']
 })
 export class RocketDrawingComponent {
-  public viewModel: RocketDrawingViewModel = new RocketDrawingViewModel();
-
-  public noseconeVM: SvgNoseconeViewModel;
+  @Input() viewModel: RocketDrawingViewModel = new RocketDrawingViewModel();
 
   @ViewChild('drawingSvg') drawingSvg: ElementRef;
 
-  constructor(private cd: ChangeDetectorRef) {
-    this.viewModel.drawingOrigin = new PixelCoord(0, 0);
-    this.viewModel.mouseLocation = new PixelCoord(0, 0);
-
-    this.noseconeVM = new SvgNoseconeViewModel();
-  }
+  constructor(private cd: ChangeDetectorRef) {}
 
   ngAfterViewInit(): void {
     this.getSizes();

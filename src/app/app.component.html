@@ -12,6 +12,6 @@
       <mat-icon *ngIf="sidenav.opened">clear</mat-icon>
       <mat-icon *ngIf="!sidenav.opened">menu</mat-icon>
     </button>
-    <rkt-rocket-drawing></rkt-rocket-drawing>
+    <rkt-rocket-drawing [viewModel]="rocketDrawing"></rkt-rocket-drawing>
   </mat-sidenav-content>
 </mat-sidenav-container>

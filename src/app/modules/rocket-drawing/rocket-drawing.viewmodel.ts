@@ -2,6 +2,7 @@ import { PixelCoord } from 'core/domain/PixelCoord';
 import { CursorViewModel } from './components/cursor/cursor.viewmodel';
 import { SvgGridLinesViewModel } from './components/svg-girdlines/svg-gridlines.viewmodel';
 import { SvgCenterlineViewModel } from './components/svg-centerline/svg-centerline.viewmodel';
+import { SvgPartBaseViewModel } from './components/_common/svg-part-base';
 
 export class RocketDrawingViewModel {
   // Screen Dimensions (px)
@@ -13,7 +14,7 @@ export class RocketDrawingViewModel {
   public drawingHeight: number;
 
   // Drawing Origin
-  public drawingOrigin: PixelCoord;
+  public drawingOrigin: PixelCoord = new PixelCoord(0, 0);
 
   // Zoom properties
   public drawingScale = 40;
@@ -31,15 +32,24 @@ export class RocketDrawingViewModel {
   public panMaxX = 10;
 
   // Coordinate display properties
-  public mouseLocation: PixelCoord;
+  public mouseLocation: PixelCoord = new PixelCoord(0, 0);
   public displayCoords = '';
 
-  // Cursor properties
+  /*
+   *
+   * SVG View Models
+   *
+   */
+
+  // Cursor SVG
   public cursorViewModel: CursorViewModel = new CursorViewModel();
 
-  // Centerline properties
+  // Centerline SVG
   public centerlineViewModel: SvgCenterlineViewModel = new SvgCenterlineViewModel();
 
-  // Grid Properties
+  // Grid SVG
   public gridLinesViewModel: SvgGridLinesViewModel = new SvgGridLinesViewModel();
+
+  // Rocket Parts
+  public drawingPartViewModels: SvgPartBaseViewModel[] = [];
 }

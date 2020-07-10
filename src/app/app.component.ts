@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { NoseconeViewModel } from 'core/view-models/NoseconeViewModel';
+import { RocketDrawingViewModel } from './modules/rocket-drawing/rocket-drawing.viewmodel';
+import { SvgNoseconeViewModel } from './modules/rocket-drawing/components/svg-nosecone/svg-nosecone.viewmodel';
 
 @Component({
   selector: 'rkt-root',
@@ -7,9 +8,9 @@ import { NoseconeViewModel } from 'core/view-models/NoseconeViewModel';
   styleUrls: ['./app.component.sass']
 })
 export class AppComponent {
-  public noseConeVM: NoseconeViewModel;
+  public rocketDrawing: RocketDrawingViewModel = new RocketDrawingViewModel();
 
   constructor() {
-    this.noseConeVM = new NoseconeViewModel();
+    this.rocketDrawing.drawingPartViewModels.push(new SvgNoseconeViewModel());
   }
 }

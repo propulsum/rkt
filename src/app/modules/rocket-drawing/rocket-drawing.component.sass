@@ -1,4 +1,4 @@
-@import 'src/colors.sass'
+@import './components/_common/svg-base'
 
 #rocketMainSVG
   width: 100%
@@ -13,10 +13,9 @@
   right: 0
   cursor: arrow
   user-select: none
+  background-color: $rkt-paper-color
 
 #drawingCoords
   margin:0
   padding: 5px
-
-#drawingContainer
-  overflow: visible
+  color: $rkt-drawingCoords-color

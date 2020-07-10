@@ -9,18 +9,31 @@
   (pointerdown)="detectedMouseDown($event)"
   (mouseenter)="detectedMouseEnter()"
 >
-  <g rkt-svg-cursor [viewModel]="viewModel.cursorViewModel"></g>
-
+  <!-- Grid and centerline -->
   <svg
-    id="drawingContainer"
     [attr.x]="viewModel.lockPanY ? '50%' : viewModel.drawingOrigin.x"
     [attr.y]="viewModel.drawingOrigin.y"
   >
     <g [attr.transform]="'scale(' + viewModel.drawingScale + ')'">
       <g rkt-svg-girdlines [viewModel]="viewModel.gridLinesViewModel" />
       <g rkt-svg-centerline [viewModel]="viewModel.centerlineViewModel" />
+    </g>
+  </svg>
 
-      <g rkt-svg-nosecone [viewModel]="noseconeVM" />
+  <!-- Cursor -->
+  <g rkt-svg-cursor [viewModel]="viewModel.cursorViewModel"></g>
+
+  <!-- Drawing -->
+  <svg
+    [attr.x]="viewModel.lockPanY ? '50%' : viewModel.drawingOrigin.x"
+    [attr.y]="viewModel.drawingOrigin.y"
+  >
+    <g [attr.transform]="'scale(' + viewModel.drawingScale + ')'">
+      <ng-container
+        *ngFor="let partViewModel of viewModel.drawingPartViewModels"
+      >
+        <g rkt-svg-nosecone [viewModel]="partViewModel" />
+      </ng-container>
     </g>
   </svg>
 </svg:svg>
