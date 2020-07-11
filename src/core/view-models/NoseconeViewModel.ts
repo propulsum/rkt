@@ -1,5 +1,5 @@
 import { ConicalNose } from 'core/domain/nosecone/conical-nose';
-import { SvgNoseconeViewModel } from 'app/modules/rocket-drawing/components/svg-nosecone/svg-nosecone.viewmodel';
+import { SvgNoseconeViewModel } from 'app/modules/rocket-drawing/components/svg-rocket-part/svg-nosecone.viewmodel';
 
 export class NoseconeViewModel {
   public rocketPart: ConicalNose;

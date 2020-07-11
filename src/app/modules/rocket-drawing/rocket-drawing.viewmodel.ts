@@ -2,7 +2,7 @@ import { PixelCoord } from 'core/domain/PixelCoord';
 import { CursorViewModel } from './components/cursor/cursor.viewmodel';
 import { SvgGridLinesViewModel } from './components/svg-girdlines/svg-gridlines.viewmodel';
 import { SvgCenterlineViewModel } from './components/svg-centerline/svg-centerline.viewmodel';
-import { SvgPartBaseViewModel } from './components/_common/svg-part-base';
+import { SvgPartBaseViewModel } from './components/svg-rocket-part/svg-part-base';
 
 export class RocketDrawingViewModel {
   // Screen Dimensions (px)

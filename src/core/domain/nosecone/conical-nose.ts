@@ -1,25 +1,17 @@
 import { NoseType } from './nose-type';
+import { RocketNose } from './rocket-nose';
+import { DrawingCoord } from '../DrawingCoord';
 
-export class ConicalNose {
-  public noseType: NoseType;
-
+export class ConicalNose extends RocketNose {
   constructor() {
-    this.noseType = NoseType.Conical;
+    super(NoseType.Conical);
   }
 
-  public cache: { [key: string]: number } = {};
-
-  clearCache(): void {
-    this.cache = {};
+  getTipThickness(): number {
+    return (this.length * this.thickness) / this.radius;
   }
 
-  getVolume(): number {
-    if (this.cache['Volume']) {
-      return this.cache['Volume'];
-    }
-
-    this.cache['Volume'] = 1;
-
-    return this.cache['Volume'];
+  public getCenterOfMass(): DrawingCoord {
+    return new DrawingCoord(this.origin.x, this.origin.y + this.radius);
   }
 }

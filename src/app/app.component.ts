@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { RocketDrawingViewModel } from './modules/rocket-drawing/rocket-drawing.viewmodel';
-import { SvgNoseconeViewModel } from './modules/rocket-drawing/components/svg-nosecone/svg-nosecone.viewmodel';
+import { SvgNoseconeViewModel } from './modules/rocket-drawing/components/svg-rocket-part/svg-nosecone.viewmodel';
+import { DrawingCoord } from 'core/domain/DrawingCoord';
+import { OgiveNose } from 'core/domain/nosecone/ogive-nose';
 
 @Component({
   selector: 'rkt-root',
@@ -11,6 +13,14 @@ export class AppComponent {
   public rocketDrawing: RocketDrawingViewModel = new RocketDrawingViewModel();
 
   constructor() {
-    this.rocketDrawing.drawingPartViewModels.push(new SvgNoseconeViewModel());
+    const nc = new OgiveNose();
+    nc.length = 10;
+    nc.radius = 3;
+    nc.thickness = 0.15;
+    nc.origin = new DrawingCoord(0, 0);
+
+    const s = new SvgNoseconeViewModel(nc);
+
+    this.rocketDrawing.drawingPartViewModels.push(s);
   }
 }

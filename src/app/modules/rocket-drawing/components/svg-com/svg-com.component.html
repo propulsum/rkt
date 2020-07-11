@@ -1,0 +1,12 @@
+<svg>
+  <g
+    [attr.transform]="
+      'translate(' + viewModel.origin.x + ',' + viewModel.origin.y + ')'
+    "
+  >
+    <circle r=".35" fill="white" />
+    <circle r=".34" stroke-width=".05" [attr.stroke]="'blue'" fill="none" />
+    <path d="M 0 -.35 A .35 .35 0 0 1 .35 0 h -.35" [attr.fill]="'blue'" />
+    <path d="M 0 .35 A .35 .35 0 0 1 -.35 0 h .35" [attr.fill]="'blue'" />
+  </g>
+</svg>
