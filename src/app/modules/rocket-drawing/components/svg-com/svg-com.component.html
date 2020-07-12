@@ -4,9 +4,42 @@
       'translate(' + viewModel.origin.x + ',' + viewModel.origin.y + ')'
     "
   >
-    <circle r=".35" fill="white" />
-    <circle r=".34" stroke-width=".05" [attr.stroke]="'blue'" fill="none" />
-    <path d="M 0 -.35 A .35 .35 0 0 1 .35 0 h -.35" [attr.fill]="'blue'" />
-    <path d="M 0 .35 A .35 .35 0 0 1 -.35 0 h .35" [attr.fill]="'blue'" />
+    <circle [attr.r]="radius" fill="white" />
+    <circle
+      [attr.r]="radius - border / 2"
+      [attr.stroke-width]="border"
+      [attr.stroke]="'blue'"
+      fill="none"
+    />
+    <path
+      [attr.d]="
+        'M 0 -' +
+        radius +
+        ' A ' +
+        radius +
+        ' ' +
+        radius +
+        ' 0 0 1 ' +
+        radius +
+        ' 0 h -' +
+        radius
+      "
+      [attr.fill]="'blue'"
+    />
+    <path
+      [attr.d]="
+        'M 0 ' +
+        radius +
+        ' A ' +
+        radius +
+        ' ' +
+        radius +
+        ' 0 0 1 -' +
+        radius +
+        ' 0 h ' +
+        radius
+      "
+      [attr.fill]="'blue'"
+    />
   </g>
 </svg>

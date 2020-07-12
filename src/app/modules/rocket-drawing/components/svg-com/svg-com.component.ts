@@ -8,4 +8,7 @@ import { SvgComViewModel } from './svg-com.viewmodel';
 })
 export class SvgComComponent {
   @Input() viewModel: SvgComViewModel;
+
+  public radius = 0.25;
+  public border = 0.025;
 }
