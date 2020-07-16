@@ -1,10 +1,10 @@
-import { NoseType } from './nose-type';
+import { NoseShape } from './nose-shape';
 import { RocketNose } from './rocket-nose';
 import { DrawingCoord } from '../DrawingCoord';
 
 export class OgiveNose extends RocketNose {
   constructor() {
-    super(NoseType.Ogive);
+    super(NoseShape.Ogive);
   }
 
   getRadiusOfCurvature(): number {
@@ -23,6 +23,13 @@ export class OgiveNose extends RocketNose {
   }
 
   public getCenterOfMass(): DrawingCoord {
-    return new DrawingCoord(this.origin.x, this.origin.y + this.radius);
+    return new DrawingCoord(
+      this.origin.x,
+      this.origin.y - this.radius + this.length
+    );
+  }
+
+  public getCenterOfPressure(): DrawingCoord {
+    return new DrawingCoord(this.origin.x, this.origin.y);
   }
 }

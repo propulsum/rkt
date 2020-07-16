@@ -6,6 +6,7 @@ import { SvgGirdlinesComponent } from './components/svg-girdlines/svg-girdlines.
 import { SvgCenterlineComponent } from './components/svg-centerline/svg-centerline.component';
 import { SvgRocketPartComponent } from './components/svg-rocket-part/svg-rocket-part.component';
 import { SvgComComponent } from './components/svg-com/svg-com.component';
+import { SvgCopComponent } from './components/svg-cop/svg-cop.component';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { SvgComComponent } from './components/svg-com/svg-com.component';
     SvgGirdlinesComponent,
     SvgCenterlineComponent,
     SvgRocketPartComponent,
-    SvgComComponent
+    SvgComComponent,
+    SvgCopComponent
   ],
   imports: [CommonModule],
   exports: [RocketDrawingComponent]

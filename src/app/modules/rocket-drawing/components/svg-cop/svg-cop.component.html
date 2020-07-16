@@ -1,0 +1,10 @@
+<svg>
+  <g
+    [attr.transform]="
+      'translate(' + viewModel.origin.x + ',' + viewModel.origin.y + ')'
+    "
+  >
+    <circle [attr.r]="radius * 0.8" fill="red" />
+    <circle [attr.r]="radius" stroke="red" stroke-width="0.035" fill="none" />
+  </g>
+</svg>

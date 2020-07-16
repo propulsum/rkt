@@ -20,9 +20,6 @@
     </g>
   </svg>
 
-  <!-- Cursor -->
-  <g rkt-svg-cursor [viewModel]="viewModel.cursorViewModel"></g>
-
   <!-- Drawing -->
   <svg
     [attr.x]="viewModel.lockPanY ? '50%' : viewModel.drawingOrigin.x"
@@ -36,6 +33,9 @@
       </ng-container>
     </g>
   </svg>
+
+  <!-- Cursor -->
+  <g rkt-svg-cursor [viewModel]="viewModel.cursorViewModel"></g>
 </svg:svg>
 <div id="drawingCoordsContainer">
   <p id="drawingCoords">{{ viewModel.displayCoords }}</p>

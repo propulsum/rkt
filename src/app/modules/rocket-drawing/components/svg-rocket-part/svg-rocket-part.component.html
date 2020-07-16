@@ -1,4 +1,5 @@
 <svg>
   <path class="solidWalls" [attr.d]="viewModel.draw()" />
+  <g [viewModel]="viewModel.CopViewModel" rkt-svg-cop />
   <g [viewModel]="viewModel.ComViewModel" rkt-svg-com />
 </svg>
