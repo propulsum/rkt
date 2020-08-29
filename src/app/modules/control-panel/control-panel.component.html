@@ -5,13 +5,13 @@
   <mat-sidenav-container class="editorContainer">
     <mat-sidenav mode="side" opened>
       <mat-button-toggle-group #toggleGroup="matButtonToggleGroup" vertical>
-        <mat-button-toggle #editButtonToggle value="build">
+        <mat-button-toggle value="build" checked>
           <mat-icon>edit</mat-icon>
         </mat-button-toggle>
         <mat-button-toggle value="info">
           <mat-icon>info</mat-icon>
         </mat-button-toggle>
-        <mat-button-toggle value="tree" checked>
+        <mat-button-toggle value="tree">
           <mat-icon>add</mat-icon>
         </mat-button-toggle>
         <mat-button-toggle value="appearance">
@@ -22,7 +22,7 @@
     <mat-sidenav-content [ngSwitch]="toggleGroup.value">
       <div class="controlPanelSwitchContainer">
         <ng-container *ngSwitchCase="'build'">
-          <rkt-part-editor></rkt-part-editor>
+          <rkt-part-editor (buttonClicked)="testButton()"></rkt-part-editor>
         </ng-container>
         <ng-container *ngSwitchCase="'info'">
           <rkt-part-data></rkt-part-data>

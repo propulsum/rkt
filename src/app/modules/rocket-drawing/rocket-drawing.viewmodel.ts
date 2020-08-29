@@ -3,6 +3,10 @@ import { CursorViewModel } from './components/cursor/cursor.viewmodel';
 import { SvgGridLinesViewModel } from './components/svg-girdlines/svg-gridlines.viewmodel';
 import { SvgCenterlineViewModel } from './components/svg-centerline/svg-centerline.viewmodel';
 import { SvgPartBaseViewModel } from './components/svg-rocket-part/svg-part-base';
+import { NoseShape } from 'core/domain/nosecone/nose-shape';
+import { RocketNose } from 'core/domain/nosecone/rocket-nose';
+import { SvgNoseconeViewModel } from './components/svg-rocket-part/svg-nosecone.viewmodel';
+import { RocketPart } from 'core/domain/rocket-part';
 
 export class RocketDrawingViewModel {
   // Screen Dimensions (px)
@@ -51,5 +55,17 @@ export class RocketDrawingViewModel {
   public gridLinesViewModel: SvgGridLinesViewModel = new SvgGridLinesViewModel();
 
   // Rocket Parts
-  public drawingPartViewModels: SvgPartBaseViewModel[] = [];
+  drawingPartViewModels: SvgPartBaseViewModel[] = [];
+
+  public addPart(part: RocketPart) {
+    let s: SvgPartBaseViewModel;
+
+    if (part instanceof RocketNose) {
+      s = new SvgNoseconeViewModel(part);
+    } else {
+      throw new Error('Part type not implemented');
+    }
+
+    this.drawingPartViewModels.push(s);
+  }
 }

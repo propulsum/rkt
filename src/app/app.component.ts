@@ -11,18 +11,5 @@ import { ConicalNose } from 'core/domain/nosecone/conical-nose';
   styleUrls: ['./app.component.sass']
 })
 export class AppComponent {
-  public rocketDrawing: RocketDrawingViewModel = new RocketDrawingViewModel();
-
-  constructor() {
-    const nc = new ConicalNose();
-    nc.setLength(10);
-    nc.setRadius(3);
-    nc.setThickness(0.15);
-    nc.origin = new DrawingCoord(0, 0);
-
-    const s = new SvgNoseconeViewModel(nc);
-
-    this.rocketDrawing.drawingPartViewModels.push(s);
-    // nc.setLength(5);
-  }
+  constructor() {}
 }

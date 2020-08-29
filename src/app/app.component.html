@@ -1,5 +1,5 @@
 <mat-sidenav-container>
-  <mat-sidenav #sidenav mode="side">
+  <mat-sidenav #sidenav mode="side" opened>
     <rkt-control-panel></rkt-control-panel>
   </mat-sidenav>
   <mat-sidenav-content>
@@ -12,6 +12,6 @@
       <mat-icon *ngIf="sidenav.opened">clear</mat-icon>
       <mat-icon *ngIf="!sidenav.opened">menu</mat-icon>
     </button>
-    <rkt-rocket-drawing [viewModel]="rocketDrawing"></rkt-rocket-drawing>
+    <rkt-rocket-drawing></rkt-rocket-drawing>
   </mat-sidenav-content>
 </mat-sidenav-container>

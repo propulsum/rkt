@@ -10,6 +10,7 @@ import { PixelCoord } from 'core/domain/PixelCoord';
 import { DrawingCoord } from 'core/domain/DrawingCoord';
 import { RocketDrawingViewModel } from './rocket-drawing.viewmodel';
 import { CursorType } from './components/cursor/cursor.viewmodel';
+import { RocketManagerService } from '../rocket-manager/rocket-manager.service';
 
 @Component({
   selector: 'rkt-rocket-drawing',
@@ -17,11 +18,16 @@ import { CursorType } from './components/cursor/cursor.viewmodel';
   styleUrls: ['./rocket-drawing.component.sass']
 })
 export class RocketDrawingComponent {
-  @Input() viewModel: RocketDrawingViewModel = new RocketDrawingViewModel();
+  viewModel: RocketDrawingViewModel = new RocketDrawingViewModel();
 
   @ViewChild('drawingSvg') drawingSvg: ElementRef;
 
-  constructor(private cd: ChangeDetectorRef) {}
+  constructor(
+    private cd: ChangeDetectorRef,
+    private rms: RocketManagerService
+  ) {
+    rms.drawing$.subscribe((x) => (this.viewModel = x));
+  }
 
   ngAfterViewInit(): void {
     this.getSizes();
