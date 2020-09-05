@@ -23,7 +23,7 @@ export class ControlPanelComponent {
     nc.setOrigin(DrawingCoord.DrawingOrigin);
     this.rms.addChild(nc);
     this.editorVM = new NoseEditorViewModel(nc, (x: RocketPart) => {
-      this.rms.test1(x);
+      this.rms.updatePart(x);
     });
     // this.editorVM = new NoseEditorViewModel(nc, this.currentPart$);
   }

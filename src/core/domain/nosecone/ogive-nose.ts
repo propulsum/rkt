@@ -46,7 +46,7 @@ export class OgiveNose extends RocketNose {
       return new DrawingCoord(cx, cy + this.cache[key]);
     }
 
-    this.cache[key] = 3;
+    this.cache[key] = this.getRadius();
 
     return new DrawingCoord(cx, cy + this.cache[key]);
   }

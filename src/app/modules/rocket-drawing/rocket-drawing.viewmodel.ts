@@ -9,6 +9,10 @@ import { SvgNoseconeViewModel } from './components/svg-rocket-part/svg-nosecone.
 import { RocketPart } from 'core/domain/rocket-part';
 
 export class RocketDrawingViewModel {
+  constructor() {
+    console.log('RocketDrawingViewModel constructor');
+  }
+
   // Screen Dimensions (px)
   public screenHeight: number;
   public screenWidth: number;
@@ -57,7 +61,7 @@ export class RocketDrawingViewModel {
   // Rocket Parts
   drawingPartViewModels: SvgPartBaseViewModel[] = [];
 
-  public addPart(part: RocketPart) {
+  public addPart(part: RocketPart): number {
     let s: SvgPartBaseViewModel;
 
     if (part instanceof RocketNose) {
@@ -66,6 +70,6 @@ export class RocketDrawingViewModel {
       throw new Error('Part type not implemented');
     }
 
-    this.drawingPartViewModels.push(s);
+    return this.drawingPartViewModels.push(s) - 1;
   }
 }

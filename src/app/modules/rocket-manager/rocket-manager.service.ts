@@ -7,18 +7,17 @@ import { DrawingCoord } from 'core/domain/DrawingCoord';
 
 @Injectable()
 export class RocketManagerService {
-  constructor() {
-    this.drawing = new RocketDrawingViewModel();
-  }
+  constructor() {}
 
-  private drawing: RocketDrawingViewModel;
+  private drawing = new RocketDrawingViewModel();
   private drawingSubject = new Subject<RocketDrawingViewModel>();
-  drawing$ = this.drawingSubject.asObservable();
+  public drawing$ = this.drawingSubject.asObservable();
 
-  test1(newPart: RocketPart) {
-    this.drawing = new RocketDrawingViewModel();
-    this.drawing.addPart(newPart);
-    this.drawingSubject.next(this.drawing);
+  private partSubject = new Subject<RocketPart>();
+  public part$ = this.partSubject.asObservable();
+
+  updatePart(newPart: RocketPart) {
+    this.partSubject.next(newPart);
   }
 
   updateDrawing() {
@@ -26,19 +25,11 @@ export class RocketManagerService {
   }
 
   addChild(part: RocketPart) {
-    this.drawing.addPart(part);
+    const index = this.drawing.addPart(part);
 
-    this.updateDrawing();
-  }
-
-  replaceChild(oldPart: RocketPart, newPart: RocketPart) {
-    // this.drawing.addPart(part);
-
-    this.updateDrawing();
-  }
-
-  deleteChild() {
-    this.drawing.drawingPartViewModels.pop();
+    this.part$.subscribe(
+      (x) => (this.drawing.drawingPartViewModels[index].rocketPart = x)
+    );
     this.updateDrawing();
   }
 }

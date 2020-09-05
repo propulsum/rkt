@@ -20,6 +20,10 @@ export class DropDownControl implements IControl {
   public options: { [key: string]: string } = {};
 
   public changeDetected: (newValue: number) => void;
+
+  public addOption(variableText: string, userText: string) {
+    this.options[userText] = variableText;
+  }
 }
 
 export class UnitControl implements IControl {

@@ -12,11 +12,12 @@
         *ngSwitchCase="'UnitSlider'"
         [inputModel]="viewModel.controlList[key]"
         (dataChange)="viewModel.controlList[key].changeDetected($event)"
-      ></rkt-unit-slider>
+      >
+      </rkt-unit-slider>
       <ng-container *ngSwitchCase="'DropDown'">
         <rkt-dropdown
           [inputModel]="viewModel.controlList[key]"
-          (dataChange)="viewModel.controlList[key].changeDetected(1)"
+          (dataChange)="viewModel.controlList[key].changeDetected($event)"
         >
         </rkt-dropdown>
       </ng-container>
