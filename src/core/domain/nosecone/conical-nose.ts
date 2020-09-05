@@ -104,8 +104,6 @@ export class ConicalNose extends RocketNose {
 
     this.cache[key] = (V1 * z1 - V2 * z2) / (V1 - V2);
 
-    console.log(this);
-
     return new DrawingCoord(cx, cy + this.cache[key]);
   }
 
@@ -119,8 +117,6 @@ export class ConicalNose extends RocketNose {
     }
 
     this.cache[key] = (2 / 3) * this.length;
-
-    console.log(this);
 
     return new DrawingCoord(cx, cy + this.cache[key]);
   }

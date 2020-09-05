@@ -22,7 +22,10 @@
     <mat-sidenav-content [ngSwitch]="toggleGroup.value">
       <div class="controlPanelSwitchContainer">
         <ng-container *ngSwitchCase="'build'">
-          <rkt-part-editor (buttonClicked)="testButton()"></rkt-part-editor>
+          <rkt-part-editor
+            [viewModel]="editorVM"
+            (buttonClicked)="testButton()"
+          ></rkt-part-editor>
         </ng-container>
         <ng-container *ngSwitchCase="'info'">
           <rkt-part-data></rkt-part-data>

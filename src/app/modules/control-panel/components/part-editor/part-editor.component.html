@@ -1,4 +1,32 @@
-<p>part-editor works!</p>
+<!-- <p>{{ currentPart.origin.print() }}</p> -->
 <button mat-raised-button color="primary" (click)="this.buttonClicked.emit()">
   hello
 </button>
+<br />
+<div>
+  <ng-container *ngFor="let key of getArray()">
+    <ng-container
+      [ngSwitch]="getControlType(viewModel.controlList[key].controlType)"
+    >
+      <rkt-unit-slider
+        *ngSwitchCase="'UnitSlider'"
+        [inputModel]="viewModel.controlList[key]"
+        (dataChange)="viewModel.controlList[key].changeDetected($event)"
+      ></rkt-unit-slider>
+      <ng-container *ngSwitchCase="'DropDown'">
+        <rkt-dropdown
+          [inputModel]="viewModel.controlList[key]"
+          (dataChange)="viewModel.controlList[key].changeDetected(1)"
+        >
+        </rkt-dropdown>
+      </ng-container>
+      <ng-container *ngSwitchCase="'TextInput'">
+        <rkt-text-input
+          [inputModel]="viewModel.controlList[key]"
+          (dataChange)="viewModel.controlList[key].changeDetected(1)"
+        >
+        </rkt-text-input>
+      </ng-container>
+    </ng-container>
+  </ng-container>
+</div>

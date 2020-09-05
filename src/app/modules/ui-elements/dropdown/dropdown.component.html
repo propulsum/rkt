@@ -1,0 +1,14 @@
+<mat-form-field appearance="outline">
+  <mat-label>{{ inputModel.label }}</mat-label>
+  <mat-select
+    #dropdown
+    (valueChange)="changeDetected(dropdown.value)"
+    [value]="inputModel.value"
+  >
+    <ng-container *ngFor="let option of getDropDownoptionsKeys()">
+      <mat-option [value]="getDropDownoptions()[option]">
+        {{ option }}
+      </mat-option>
+    </ng-container>
+  </mat-select>
+</mat-form-field>

@@ -8,6 +8,7 @@ import { PartDataComponent } from './components/part-data/part-data.component';
 import { TreeDrawerComponent } from './components/tree-drawer/tree-drawer.component';
 import { PartAppearanceComponent } from './components/part-appearance/part-appearance.component';
 import { RocketManagerModule } from '../rocket-manager/rocket-manager.module';
+import { UiElementsModule } from '../ui-elements/ui-elements.module';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,12 @@ import { RocketManagerModule } from '../rocket-manager/rocket-manager.module';
     TreeDrawerComponent,
     PartAppearanceComponent
   ],
-  imports: [CommonModule, MaterialModule, RocketManagerModule],
+  imports: [
+    CommonModule,
+    MaterialModule,
+    RocketManagerModule,
+    UiElementsModule
+  ],
   exports: [ControlPanelComponent]
 })
 export class ControlPanelModule {}

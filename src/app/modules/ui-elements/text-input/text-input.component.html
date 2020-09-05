@@ -1,0 +1,8 @@
+<mat-form-field appearance="outline">
+  <mat-label>{{ inputModel.label }}</mat-label>
+  <input
+    matInput
+    [value]="inputModel.value"
+    (input)="changeDetected($event.target.value)"
+  />
+</mat-form-field>

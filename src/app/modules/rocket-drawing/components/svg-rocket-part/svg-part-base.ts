@@ -9,4 +9,11 @@ export abstract class SvgPartBaseViewModel {
   public CopViewModel: SvgCopViewModel;
 
   public abstract draw(): string;
+
+  protected lastCacheId: string = '';
+  protected drawCache: string;
+
+  public needsToRedraw(): boolean {
+    return this.lastCacheId != this.rocketPart.cacheId;
+  }
 }

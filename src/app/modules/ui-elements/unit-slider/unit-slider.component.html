@@ -1,0 +1,33 @@
+<mat-form-field appearance="outline">
+  <mat-label>{{ inputModel.label }}</mat-label>
+  <input
+    type="number"
+    (input)="changeDetected()"
+    [min]="inputModel.min"
+    [max]="inputModel.max"
+    [step]="inputModel.step"
+    [(ngModel)]="inputModel.value"
+    autocomplete="off"
+    matInput
+  />
+  <mat-select class="UnitsSelect" value="r">
+    <mat-option value="r">R</mat-option>
+    <mat-option value="inch">inch</mat-option>
+  </mat-select>
+  <mat-slider
+    (input)="inputModel.value = $event.value; changeDetected()"
+    [min]="inputModel.min"
+    [step]="inputModel.step"
+    [max]="inputModel.max"
+    [value]="inputModel.value"
+  >
+  </mat-slider>
+  <button
+    color="accent"
+    (click)="inputModel.value = default; changeDetected()"
+    mat-mini-fab
+    style="box-shadow: none;"
+  >
+    <mat-icon>undo</mat-icon>
+  </button>
+</mat-form-field>

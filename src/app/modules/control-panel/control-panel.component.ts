@@ -2,6 +2,12 @@ import { Component } from '@angular/core';
 import { RocketManagerService } from '../rocket-manager/rocket-manager.service';
 import { ConicalNose } from 'core/domain/nosecone/conical-nose';
 import { DrawingCoord } from 'core/domain/DrawingCoord';
+import { RocketPart } from 'core/domain/rocket-part';
+import {
+  PartEditorViewModel,
+  NoseEditorViewModel
+} from './components/part-editor/part-editor.viewmodel';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'rkt-control-panel',
@@ -9,18 +15,22 @@ import { DrawingCoord } from 'core/domain/DrawingCoord';
   styleUrls: ['./control-panel.component.sass']
 })
 export class ControlPanelComponent {
-  private test: string;
-
-  constructor(public rms: RocketManagerService) {}
-
-  private static a: number = 1;
-
-  testButton(): void {
+  constructor(public rms: RocketManagerService) {
     const nc = new ConicalNose();
-    nc.setLength(ControlPanelComponent.a++);
+    nc.setLength(6);
     nc.setRadius(3);
     nc.setThickness(0.15);
-    nc.origin = new DrawingCoord(0, 0);
+    nc.setOrigin(DrawingCoord.DrawingOrigin);
     this.rms.addChild(nc);
+    this.editorVM = new NoseEditorViewModel(nc, (x: RocketPart) => {
+      this.rms.test1(x);
+    });
+    // this.editorVM = new NoseEditorViewModel(nc, this.currentPart$);
+  }
+
+  public editorVM: PartEditorViewModel;
+
+  testButton(): void {
+    this.rms.updateDrawing();
   }
 }

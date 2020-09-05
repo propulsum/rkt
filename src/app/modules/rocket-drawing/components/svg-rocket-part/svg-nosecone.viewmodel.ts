@@ -20,15 +20,25 @@ export class SvgNoseconeViewModel extends SvgPartBaseViewModel {
   }
 
   public draw(): string {
+    if (!this.needsToRedraw()) {
+      return this.drawCache;
+    }
+
+    this.lastCacheId = this.rocketPart.cacheId;
     this.ComViewModel.origin = this.rocketPart.getCenterOfMass();
+    this.CopViewModel.origin = this.rocketPart.getCenterOfPressure();
     switch (this.rocketPart.noseShape) {
       case NoseShape.Conical:
-        return this.drawConical();
+        this.drawCache = this.drawConical();
+        break;
       case NoseShape.Ogive:
-        return this.drawOgive();
+        this.drawCache = this.drawOgive();
+        break;
       default:
         throw new Error('NoseType not implemented');
     }
+
+    return this.drawCache;
   }
 
   private drawConical(): string {
@@ -43,21 +53,22 @@ export class SvgNoseconeViewModel extends SvgPartBaseViewModel {
     const L = nose.getLength();
     const R = nose.getRadius();
     const t = nose.getHorizontalWallThk();
+    const o = nose.getOrigin();
 
     // Move to origin
-    let result = 'M ' + nose.origin.x + ' ' + nose.origin.y;
+    let result = 'M ' + o.x + ' ' + o.y;
     // Left outer wall
     result += ' l -' + R + ' ' + L;
     // wall
     result += ' h ' + t;
     // left inner wall
-    result += ' L ' + nose.origin.x + ' ' + (nose.origin.y + vThk);
+    result += ' L ' + o.x + ' ' + (o.y + vThk);
     // right inner wall
-    result += ' L ' + (nose.origin.x + R - t) + ' ' + (nose.origin.y + L);
+    result += ' L ' + (o.x + R - t) + ' ' + (o.y + L);
     //right wall
     result += ' h ' + t;
     // right outer wall
-    result += ' L ' + nose.origin.x + ' ' + nose.origin.y;
+    result += ' L ' + o.x + ' ' + o.y;
 
     return result;
   }
@@ -75,9 +86,10 @@ export class SvgNoseconeViewModel extends SvgPartBaseViewModel {
     const L = nose.getLength();
     const R = nose.getRadius();
     const t = nose.getThickness();
+    const o = nose.getOrigin();
 
     // Move to origin
-    let result = 'M ' + nose.origin.x + ' ' + nose.origin.y;
+    let result = 'M ' + o.x + ' ' + o.y;
     //draw left outer
     result += ' a ';
     result += rho + ' ';

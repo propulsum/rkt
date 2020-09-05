@@ -8,28 +8,60 @@ export class OgiveNose extends RocketNose {
   }
 
   getRadiusOfCurvature(): number {
-    return (
-      (Math.pow(this.length, 2) + Math.pow(this.radius, 2)) / (2 * this.radius)
-    );
+    const key = 'Radius of Curvature';
+    if (this.cache[key]) {
+      return this.cache[key];
+    }
+
+    const R = this.radius;
+    const L = this.length;
+
+    this.cache[key] = (Math.pow(L, 2) + Math.pow(R, 2)) / (2 * R);
+
+    return this.cache[key];
   }
 
   getTipThickness(): number {
+    const key = 'Tip Thickness';
+    if (this.cache[key]) {
+      return this.cache[key];
+    }
+
     let vThk: number = this.length;
     let temp: number = this.thickness - 1;
     temp *= this.thickness - Math.pow(this.length, 2);
     vThk -= Math.sqrt(temp);
 
-    return vThk / this.radius;
+    this.cache[key] = vThk / this.radius;
+
+    return this.cache[key];
   }
 
   public getCenterOfMass(): DrawingCoord {
-    return new DrawingCoord(
-      this.origin.x,
-      this.origin.y - this.radius + this.length
-    );
+    const key = 'COM (y) (relative)';
+    const cx = this.origin.x;
+    const cy = this.origin.y;
+
+    if (this.cache[key]) {
+      return new DrawingCoord(cx, cy + this.cache[key]);
+    }
+
+    this.cache[key] = 3;
+
+    return new DrawingCoord(cx, cy + this.cache[key]);
   }
 
   public getCenterOfPressure(): DrawingCoord {
-    return new DrawingCoord(this.origin.x, this.origin.y);
+    const key = 'COP (y) (relative)';
+    const cx = this.origin.x;
+    const cy = this.origin.y;
+
+    if (this.cache[key]) {
+      return new DrawingCoord(cx, cy + this.cache[key]);
+    }
+
+    this.cache[key] = 1;
+
+    return new DrawingCoord(cx, cy + this.cache[key]);
   }
 }

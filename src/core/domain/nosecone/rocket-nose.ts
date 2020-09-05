@@ -7,15 +7,9 @@ export abstract class RocketNose extends RocketPart {
   protected thickness: number;
   public readonly noseShape: NoseShape;
 
-  protected cache: { [key: string]: number } = {};
-
   constructor(shape: NoseShape) {
     super();
     this.noseShape = shape;
-  }
-
-  protected clearCache(): void {
-    this.cache = {};
   }
 
   public getLength(): number {
