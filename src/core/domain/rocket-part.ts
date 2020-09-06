@@ -1,6 +1,18 @@
 import { DrawingCoord } from './DrawingCoord';
 
 export abstract class RocketPart {
+  constructor(name: string) {
+    this.setName(name);
+  }
+
+  protected name: string;
+  public setName(newname: string) {
+    this.name = newname;
+  }
+  public getName(): string {
+    return this.name;
+  }
+
   protected origin: DrawingCoord;
   public setOrigin(newOrigin: DrawingCoord) {
     this.origin = newOrigin;

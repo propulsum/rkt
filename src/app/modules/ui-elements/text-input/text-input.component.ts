@@ -8,10 +8,4 @@ import { TextInputControl } from '../RocketPartControlModel';
 })
 export class TextInputComponent {
   @Input() inputModel: TextInputControl = new TextInputControl();
-  @Output() dataChange: EventEmitter<string> = new EventEmitter<string>();
-
-  changeDetected(afsd: string): void {
-    this.inputModel.value = afsd;
-    this.dataChange.emit(this.inputModel.value);
-  }
 }

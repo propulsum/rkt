@@ -72,16 +72,19 @@ export class RocketDrawingComponent {
 
     this.viewModel.cursorViewModel.mouseLocation = this.viewModel.mouseLocation;
 
+    // Update displayed coordinates
     this.viewModel.displayCoords = this.pixelToCoord(
       this.viewModel.mouseLocation
     ).print();
 
+    // Handle Panning
     if (this.viewModel.isPanning) {
       this.pan();
     }
   }
 
   detectedMouseWheel(event: WheelEvent): void {
+    //Handle Minimum Zoom
     if (
       this.viewModel.drawingScale + event.deltaY <
       this.viewModel.drawingScaleMin
@@ -89,6 +92,8 @@ export class RocketDrawingComponent {
       this.viewModel.drawingScale = this.viewModel.drawingScaleMin + 1;
       return;
     }
+
+    //Handle Maximum Zoom
     if (
       this.viewModel.drawingScale + event.deltaY >
       this.viewModel.drawingScaleMax
@@ -96,6 +101,8 @@ export class RocketDrawingComponent {
       this.viewModel.drawingScale = this.viewModel.drawingScaleMax - 1;
       return;
     }
+
+    // Zoom
     this.viewModel.drawingScale +=
       event.deltaY / this.viewModel.scrollWheelSpeed;
   }

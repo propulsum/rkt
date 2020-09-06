@@ -10,9 +10,9 @@
     autocomplete="off"
     matInput
   />
-  <mat-select class="UnitsSelect" value="r">
-    <mat-option value="r">R</mat-option>
-    <mat-option value="inch">inch</mat-option>
+  <mat-select class="UnitsSelect" value="inch"
+    ><mat-option value="inch">inch</mat-option
+    ><mat-option value="mm">mm</mat-option>
   </mat-select>
   <mat-slider
     (input)="inputModel.value = $event.value; changeDetected()"

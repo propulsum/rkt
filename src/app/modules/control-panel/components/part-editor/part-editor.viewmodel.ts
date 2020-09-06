@@ -1,7 +1,8 @@
 import {
   IControl,
   UnitControl,
-  DropDownControl
+  DropDownControl,
+  TextInputControl
 } from 'app/modules/ui-elements/RocketPartControlModel';
 import { RocketNose } from 'core/domain/nosecone/rocket-nose';
 import { OgiveNose } from 'core/domain/nosecone/ogive-nose';
@@ -22,14 +23,42 @@ export class NoseEditorViewModel extends PartEditorViewModel {
     super();
     this.rocketPart = nose;
 
+    const a0 = new TextInputControl();
+    a0.label = 'Name';
+    a0.value = this.rocketPart.getName();
+    a0.changeDetected = (x) => {
+      this.rocketPart.setName(x);
+    };
+
+    this.controlList[a0.label] = a0;
+
+    // Shape Control
     const a1 = new DropDownControl();
     a1.label = 'Shape';
     a1.addOption(NoseShape[NoseShape.Conical], 'Conical');
     a1.addOption(NoseShape[NoseShape.Ogive], 'Ogive');
-    a1.value = a1.options[0];
+    a1.value = NoseShape[NoseShape.Conical];
     a1.changeDetected = (x) => {
-      console.log(x);
-      // this.rocketPart.setRadius(x);
+      let newNose: RocketNose;
+      switch (x) {
+        case NoseShape[NoseShape.Conical]:
+          newNose = new ConicalNose();
+          break;
+        case NoseShape[NoseShape.Ogive]:
+          newNose = new OgiveNose();
+          break;
+        default:
+          throw new Error('NoseType not implemented');
+      }
+
+      newNose.setName(this.rocketPart.getName());
+      newNose.setLength(this.rocketPart.getLength());
+      newNose.setRadius(this.rocketPart.getRadius());
+      newNose.setThickness(this.rocketPart.getThickness());
+      newNose.setOrigin(this.rocketPart.getOrigin());
+
+      this.rocketPart = newNose;
+      update(newNose);
     };
 
     this.controlList[a1.label] = a1;

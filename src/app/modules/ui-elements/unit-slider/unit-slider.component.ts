@@ -9,8 +9,6 @@ import { UnitControl } from '../RocketPartControlModel';
 export class UnitSliderComponent implements OnInit {
   @Input() inputModel: UnitControl = new UnitControl();
 
-  @Output() dataChange: EventEmitter<number> = new EventEmitter<number>();
-
   public default: number;
 
   ngOnInit(): void {
@@ -18,6 +16,6 @@ export class UnitSliderComponent implements OnInit {
   }
 
   changeDetected(): void {
-    this.dataChange.emit(this.inputModel.value);
+    this.inputModel.changeDetected(this.inputModel.value);
   }
 }

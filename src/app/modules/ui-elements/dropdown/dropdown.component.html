@@ -2,7 +2,7 @@
   <mat-label>{{ inputModel.label }}</mat-label>
   <mat-select
     #dropdown
-    (valueChange)="changeDetected(dropdown.value)"
+    (valueChange)="this.inputModel.changeDetected(dropdown.value)"
     [value]="inputModel.value"
   >
     <ng-container *ngFor="let option of getDropDownoptionsKeys()">

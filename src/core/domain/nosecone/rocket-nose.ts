@@ -7,8 +7,10 @@ export abstract class RocketNose extends RocketPart {
   protected thickness: number;
   public readonly noseShape: NoseShape;
 
+  static count = 1;
+
   constructor(shape: NoseShape) {
-    super();
+    super('Nose Cone ' + RocketNose.count++);
     this.noseShape = shape;
   }
 

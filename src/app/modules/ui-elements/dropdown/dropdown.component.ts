@@ -8,12 +8,6 @@ import { DropDownControl } from '../RocketPartControlModel';
 })
 export class DropdownComponent {
   @Input() inputModel: DropDownControl = new DropDownControl();
-  @Output() dataChange: EventEmitter<string> = new EventEmitter<string>();
-
-  changeDetected(afsd: string): void {
-    this.inputModel.value = afsd;
-    this.dataChange.emit(this.inputModel.value);
-  }
 
   getDropDownoptions(): { [key: string]: string } {
     return this.inputModel.options;

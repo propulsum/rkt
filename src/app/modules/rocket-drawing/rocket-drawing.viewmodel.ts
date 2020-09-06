@@ -9,10 +9,6 @@ import { SvgNoseconeViewModel } from './components/svg-rocket-part/svg-nosecone.
 import { RocketPart } from 'core/domain/rocket-part';
 
 export class RocketDrawingViewModel {
-  constructor() {
-    console.log('RocketDrawingViewModel constructor');
-  }
-
   // Screen Dimensions (px)
   public screenHeight: number;
   public screenWidth: number;

@@ -3,6 +3,6 @@
   <input
     matInput
     [value]="inputModel.value"
-    (input)="changeDetected($event.target.value)"
+    (input)="inputModel.changeDetected($event.target.value)"
   />
 </mat-form-field>

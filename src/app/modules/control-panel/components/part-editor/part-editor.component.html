@@ -11,21 +11,13 @@
       <rkt-unit-slider
         *ngSwitchCase="'UnitSlider'"
         [inputModel]="viewModel.controlList[key]"
-        (dataChange)="viewModel.controlList[key].changeDetected($event)"
       >
       </rkt-unit-slider>
       <ng-container *ngSwitchCase="'DropDown'">
-        <rkt-dropdown
-          [inputModel]="viewModel.controlList[key]"
-          (dataChange)="viewModel.controlList[key].changeDetected($event)"
-        >
-        </rkt-dropdown>
+        <rkt-dropdown [inputModel]="viewModel.controlList[key]"> </rkt-dropdown>
       </ng-container>
       <ng-container *ngSwitchCase="'TextInput'">
-        <rkt-text-input
-          [inputModel]="viewModel.controlList[key]"
-          (dataChange)="viewModel.controlList[key].changeDetected(1)"
-        >
+        <rkt-text-input [inputModel]="viewModel.controlList[key]">
         </rkt-text-input>
       </ng-container>
     </ng-container>

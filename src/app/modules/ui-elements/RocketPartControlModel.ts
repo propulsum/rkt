@@ -10,7 +10,7 @@ export interface IControl {
   value: any;
   controlType: ControlType;
 
-  changeDetected: (newValue: number) => void;
+  changeDetected: (newValue: any) => void;
 }
 
 export class DropDownControl implements IControl {
@@ -19,7 +19,7 @@ export class DropDownControl implements IControl {
   public value: string;
   public options: { [key: string]: string } = {};
 
-  public changeDetected: (newValue: number) => void;
+  public changeDetected: (newValue: string) => void;
 
   public addOption(variableText: string, userText: string) {
     this.options[userText] = variableText;
@@ -40,9 +40,9 @@ export class UnitControl implements IControl {
 export class TextInputControl implements IControl {
   public readonly controlType: ControlType = ControlType.TextInput;
   public label: string;
-  public value: string;
+  public value: string = '';
 
-  public changeDetected: (newValue: number) => void;
+  public changeDetected: (newValue: string) => void;
 }
 
 export class RocketPartControlModel {
