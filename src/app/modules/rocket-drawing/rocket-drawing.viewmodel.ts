@@ -7,6 +7,7 @@ import { NoseShape } from 'core/domain/nosecone/nose-shape';
 import { RocketNose } from 'core/domain/nosecone/rocket-nose';
 import { SvgNoseconeViewModel } from './components/svg-rocket-part/svg-nosecone.viewmodel';
 import { RocketPart } from 'core/domain/rocket-part';
+import { Rocket } from 'core/domain/rocket';
 
 export class RocketDrawingViewModel {
   // Screen Dimensions (px)

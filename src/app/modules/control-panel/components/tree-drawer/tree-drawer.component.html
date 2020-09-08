@@ -1,1 +1,19 @@
-<h1 style="margin: 0;">Nosecone</h1>
+<div class="itemContainer">
+  <div
+    class="item"
+    mat-raised-button
+    color="primary"
+    (click)="editClicked(viewModel)"
+  >
+    {{ viewModel.getName() }}
+  </div>
+  <div style="margin-left: 4px;">
+    <ng-container *ngFor="let a of viewModel.children">
+      <rkt-tree-drawer
+        [viewModel]="a"
+        [treeDepth]="treeDepth + 1"
+        (edit)="editClicked($event)"
+      ></rkt-tree-drawer>
+    </ng-container>
+  </div>
+</div>

@@ -13,23 +13,30 @@ export class RocketManagerService {
   private drawingSubject = new Subject<RocketDrawingViewModel>();
   public drawing$ = this.drawingSubject.asObservable();
 
-  private partSubject = new Subject<RocketPart>();
-  public part$ = this.partSubject.asObservable();
-
   updatePart(newPart: RocketPart) {
-    this.partSubject.next(newPart);
+    for (
+      let index = 0;
+      index < this.drawing.drawingPartViewModels.length;
+      index++
+    ) {
+      let element = this.drawing.drawingPartViewModels[index];
+
+      if (newPart.id == element.rocketPart.id) {
+        delete element.rocketPart;
+        element.rocketPart = newPart;
+      }
+    }
+
+    this.updateDrawing();
   }
 
   updateDrawing() {
     this.drawingSubject.next(this.drawing);
   }
 
-  addChild(part: RocketPart) {
+  addPartToDrawing(part: RocketPart) {
     const index = this.drawing.addPart(part);
 
-    this.part$.subscribe(
-      (x) => (this.drawing.drawingPartViewModels[index].rocketPart = x)
-    );
     this.updateDrawing();
   }
 }

@@ -14,8 +14,6 @@ import { PartEditorViewModel } from './part-editor.viewmodel';
 export class PartEditorComponent {
   @Input() viewModel: PartEditorViewModel;
 
-  @Output() buttonClicked: EventEmitter<void> = new EventEmitter<void>();
-
   constructor() {}
 
   getControlType(type: ControlType): string {

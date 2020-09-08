@@ -1,6 +1,9 @@
 <div class="controlPanelContainer">
   <div class="treeDrawerContainer">
-    <rkt-tree-drawer></rkt-tree-drawer>
+    <rkt-tree-drawer
+      [viewModel]="rocket"
+      (edit)="drawerButton($event)"
+    ></rkt-tree-drawer>
   </div>
   <mat-sidenav-container class="editorContainer">
     <mat-sidenav mode="side" opened>
@@ -22,16 +25,15 @@
     <mat-sidenav-content [ngSwitch]="toggleGroup.value">
       <div class="controlPanelSwitchContainer">
         <ng-container *ngSwitchCase="'build'">
-          <rkt-part-editor
-            [viewModel]="editorVM"
-            (buttonClicked)="testButton()"
-          ></rkt-part-editor>
+          <rkt-part-editor [viewModel]="editorVM"></rkt-part-editor>
         </ng-container>
         <ng-container *ngSwitchCase="'info'">
           <rkt-part-data></rkt-part-data>
         </ng-container>
         <ng-container *ngSwitchCase="'tree'">
-          <rkt-part-toolbox></rkt-part-toolbox>
+          <rkt-part-toolbox
+            (buttonClicked)="addChild(); toggleGroup.value = 'build'"
+          ></rkt-part-toolbox>
         </ng-container>
         <ng-container *ngSwitchCase="'appearance'">
           <rkt-part-appearance></rkt-part-appearance>
